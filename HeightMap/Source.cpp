@@ -77,8 +77,9 @@ int main() {
   srand(time(NULL));
   Generator gen;
   int h,w;
+  std::cout.precision(5);
   clock_t start,end;
-  double r;
+  double r,avg=0.0;
   std::cout<<"Input height: ";
   std::cin>>h;
   std::cout << "Input width: ";
@@ -86,18 +87,36 @@ int main() {
   std::cout << "Input roughness: ";
   std::cin >> r;
   start =clock();
-  gen.Generate(h,w,r);
-  double avg = gen.hmap.average();
-  for (int i=0;i<gen.hmap.x_size();i++)
-    for (int j=0;j<gen.hmap.y_size();j++)
-      gen.hmap[i][j]= pow(gen.hmap[i][j],2);
-  std::vector<double> vect(w*h);
-  int counter = 0;
-  for (int i = 0; i<gen.hmap.x_size(); i++)
-    for (int j = 0; j<gen.hmap.y_size(); j++)
-      vect[counter++] = gen.hmap[i][j];
-  std::sort(vect.begin(),vect.end());
-  avg = vect[(int)((w*h*3)/4)];
+  double newavg,summ,curr;
+  FILE *f;
+  errno_t err;
+  err = fopen_s(&f, "C:\\Output\\x.mat", "w");
+  for (int u = 0;u<101;u++){
+  curr = (double)u/100;
+  summ = 0.0;
+    for (int k=0; k<25;k++){
+    gen.Generate(h,w,curr);
+    avg = gen.hmap.average();
+    for (int i=0;i<gen.hmap.x_size();i++)
+      for (int j=0;j<gen.hmap.y_size();j++)
+        gen.hmap[i][j]= pow(gen.hmap[i][j],2);
+    std::vector<double> vect(w*h);
+    int counter = 0;
+    for (int i = 0; i<gen.hmap.x_size(); i++)
+      for (int j = 0; j<gen.hmap.y_size(); j++)
+        vect[counter++] = gen.hmap[i][j];
+    std::sort(vect.begin(),vect.end());
+    avg = vect[(int)((w*h*3)/4)]; 
+    double a = gen.hmap.average();
+    summ+= avg/a;
+  }
+  fprintf(f,"%f",summ/25);
+  fputs(" ",f);
+  std::cout<<"Average ratio for "<<std::fixed<<curr<<" is "<<summ/25<<std::endl;
+}
+  system("pause");
+  fclose(f);
+  return 0;
   std::cout << "time consumed for generation: " << (double)(clock() - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
   start = clock();
   CreateBmp24("C:\\Output\\bit.bmp",gen.hmap,avg);

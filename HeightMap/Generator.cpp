@@ -77,7 +77,7 @@ void Generator::Generate(int x_size_, int y_size_, double roughness) {
   for (int i = 0; i < iterations; i++) {
     roughness_ = pow(roughness,i);
     step_size = ((y_size-1)/pow(2,i));
-    if (i == iterations / 3) {
+    if (i == 1) {
       hmap[0][0] = 0;
       hmap[0][y_size - 1] = 0;
       hmap[x_size - 1][0] = 0;
