@@ -112,11 +112,13 @@
   <ItemGroup>
     <ClInclude Include="Generator.h" />
     <ClInclude Include="HeightMap.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Generator.cpp" />
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

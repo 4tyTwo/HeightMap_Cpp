@@ -90,6 +90,66 @@ void Generator::Generate(int x_size_, int y_size_, double roughness) {
   }
 }
 
+void Generator::River_generation(int base_x,int base_y,int x, int y) {
+  int length = (abs(x - base_x)>=abs(y - base_y)) ? x-base_x:y-base_y;
+  if (length<4){
+    if (base_x == x)
+      for( int i = base_y;i<y;i++)
+        river[x][i]=1.0;
+    else
+      line(base_x,base_y,x,y);
+    return;
+  }
+  int coeff = length/4;
+  coeff = (coeff == 0) ? 1 : coeff;
+  double rnd = rand() % coeff, rnd2 = rand() % coeff;
+  int mx = base_x + ((x-base_x)/2) + rnd - coeff/2, my = base_y + ((y-base_y)/2);
+  if (mx < 0)
+    mx = abs(mx);
+  else
+    if (mx >= x)
+      mx = x-1;
+  if (mx < 0)
+    mx = abs(mx);
+  /*if(my < 0)
+    my = 0;
+    else
+      if (my >= y)
+        my = y;*/
+  River_generation(mx,my,x,y);//верхне-правая половина
+  River_generation(base_x,base_y, mx, my);
+}
+
+void Generator::line(int x0,int y0,int x1,int y1) {
+  //Это вариант для ситуаций, из нижнего левого угла в верхний правый. deltay <= deltax;
+  int deltax = abs(x1-x0), deltay = abs(y1-y0);
+  double error = 0, deltaerr = (double)deltay/deltax;
+  int y = y0,x;
+  int diry = y1-y0;
+  if (diry > 0)
+      diry=1;
+  else
+      diry = -1;
+  if (deltay <= deltax)
+    for (x = x0; x < x1; x++) {
+      river[x][y] = 1.0;
+      error += deltaerr;
+      if (error > 0.5){
+          y=y+diry;
+          error -= 1.0;
+      }
+    }
+  else
+    for (x = x1-1; x >= x0; x--) {
+      river[x][y] = 1.0;
+      error += deltaerr;
+      if (error > 0.5) {
+        y = y + diry;
+        error -= 1.0;
+      }
+    }
+}
+
 Generator::~Generator()
 {
 }
