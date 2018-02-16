@@ -75,53 +75,71 @@ void CreateBmp24(char *fname, HeightMap& hmap,double sea_level)
 
 int main() {
   srand(time(NULL));
-  Generator gen;
+  //Generator gen;
   int h,w;
-  std::cout.precision(5);
+  double sea_level;
+  std::cout.precision(7);
   clock_t start,end;
   double r,avg=0.0;
   std::cout<<"Input height: ";
   std::cin>>h;
   std::cout << "Input width: ";
   std::cin >> w;
-  std::cout << "Input roughness: ";
-  std::cin >> r;
+  //std::cout << "Input sea percentage: ";
+  //std::cin >> sea_level;
   start =clock();
   double newavg,summ,curr;
-  FILE *f;
+  FILE *f,*fr;
   errno_t err;
-  err = fopen_s(&f, "C:\\Output\\x.mat", "w");
-  for (int u = 0;u<101;u++){
-  curr = (double)u/100;
-  summ = 0.0;
-    for (int k=0; k<25;k++){
-    gen.Generate(h,w,curr);
-    avg = gen.hmap.average();
-    for (int i=0;i<gen.hmap.x_size();i++)
-      for (int j=0;j<gen.hmap.y_size();j++)
-        gen.hmap[i][j]= pow(gen.hmap[i][j],2);
-    std::vector<double> vect(w*h);
-    int counter = 0;
-    for (int i = 0; i<gen.hmap.x_size(); i++)
-      for (int j = 0; j<gen.hmap.y_size(); j++)
-        vect[counter++] = gen.hmap[i][j];
-    std::sort(vect.begin(),vect.end());
-    avg = vect[(int)((w*h*3)/4)]; 
-    double a = gen.hmap.average();
-    summ+= avg/a;
+  for (int y=95;y<101;y++){
+    sea_level = (double)y/100;
+    char filename1[80] = "C:\\Output\\values",filename2[80]="C:\\Output\\roughnesses",buff[15];
+    _itoa_s((int)(sea_level * 100),buff,10);
+    strcat_s(filename1,80,buff);
+    strcat_s(filename1,80,".txt");
+    strcat_s(filename2,80, buff);
+    strcat_s(filename2,80,".txt");
+    err = fopen_s(&f, filename1, "w");
+   // err = fopen_s(&fr,filename2, "w");
+    for (int u = 0;u<101;u++){
+    Generator gen;
+    curr = (double)u/100;
+    summ = 0.0;
+      for (int k=0; k<50;k++){
+      gen.Generate(h,w,curr);
+      avg = gen.hmap.average();
+      for (int i=0;i<gen.hmap.x_size();i++)
+        for (int j=0;j<gen.hmap.y_size();j++)
+          gen.hmap[i][j]= pow(gen.hmap[i][j],2);
+      std::vector<double> vect(w*h);
+      int counter = 0;
+      for (int i = 0; i<gen.hmap.x_size(); i++)
+        for (int j = 0; j<gen.hmap.y_size(); j++)
+          vect[counter++] = gen.hmap[i][j];
+      std::sort(vect.begin(),vect.end());
+      int index = w*h*sea_level;
+      avg = vect[(int)(w*h*sea_level)]; 
+      vect.clear();
+      double a = gen.hmap.average();
+      summ+= avg/a;
+    }
+    fprintf(f,"%f",summ/50);
+    fputs(" ",f);
+    //fprintf(fr, "%f", curr);
+  //  fputs(" ", fr);
+    std::cout<<"Average ratio for "<<std::fixed<<curr<<" and with sea percentage of "<<sea_level*100<<"% is "<<summ/50<<std::endl;
   }
-  fprintf(f,"%f",summ/25);
-  fputs(" ",f);
-  std::cout<<"Average ratio for "<<std::fixed<<curr<<" is "<<summ/25<<std::endl;
-}
-  system("pause");
   fclose(f);
+}
+ /* system("pause");
+  fclose(f);
+  fclose(fr);
   return 0;
-  std::cout << "time consumed for generation: " << (double)(clock() - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
+  std::cout << "time consumed for generation: " << std::fixed<<(double)(clock() - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
   start = clock();
   CreateBmp24("C:\\Output\\bit.bmp",gen.hmap,avg);
   end = clock();
   double time_cons = (end - start) / ((w*h)*CLOCKS_PER_SEC);
   std::cout<<"time consumed for drawing bitmap: "<<(double)(end-start)/CLOCKS_PER_SEC<<" seconds"<<std::endl<<w*h<<" points calculated"<<std::endl<<time_cons<<" time per point"<<std::endl;
-  system("pause");
+  system("pause");*/
 }

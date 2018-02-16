@@ -10,6 +10,7 @@ public:
   HeightMap hmap;
   ~Generator();
 private:
+  bool initialized;
  double roughness_;
  int step_size;
  void square();

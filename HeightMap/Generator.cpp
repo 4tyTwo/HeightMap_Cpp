@@ -1,6 +1,7 @@
 #include "Generator.h"
 
 Generator::Generator(){
+  initialized = false;
 }
 
 double Generator::square_displace(int i, int j) {
@@ -58,7 +59,10 @@ void Generator::square() {
 }
 
 void Generator::Generate(int x_size_, int y_size_, double roughness) {
-  hmap = HeightMap(x_size_,y_size_);
+  if (!initialized){
+    hmap = HeightMap(x_size_,y_size_);
+    initialized = true;
+  }
   int iterations;
   roughness_ = roughness;
   hmap.zeros();
@@ -77,19 +81,18 @@ void Generator::Generate(int x_size_, int y_size_, double roughness) {
   for (int i = 0; i < iterations; i++) {
     roughness_ = pow(roughness,i);
     step_size = ((y_size-1)/pow(2,i));
-    if (i == 1) {
+    /*if (i == 1) {
       hmap[0][0] = 0;
       hmap[0][y_size - 1] = 0;
       hmap[x_size - 1][0] = 0;
       hmap[x_size - 1][hmap.y_size() - 1] = 0;
       hmap[0][(y_size - 1) / 2] = 0;
       hmap[x_size - 1][(y_size - 1) / 2] = 0;
-    }
+    }*/
     diamond();
     square();
   }
 }
 
-Generator::~Generator()
-{
+Generator::~Generator(){
 }

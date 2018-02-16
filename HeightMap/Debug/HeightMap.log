@@ -1,5 +1,8 @@
 ﻿  Source.cpp
 c:\projects\heightmap_cpp\heightmap\source.cpp(77): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-c:\projects\heightmap_cpp\heightmap\source.cpp(90): warning C4101: newavg: неиспользованная локальная переменная
+c:\projects\heightmap_cpp\heightmap\source.cpp(120): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\projects\heightmap_cpp\heightmap\source.cpp(82): warning C4101: end: неиспользованная локальная переменная
+c:\projects\heightmap_cpp\heightmap\source.cpp(91): warning C4101: newavg: неиспользованная локальная переменная
+c:\projects\heightmap_cpp\heightmap\source.cpp(92): warning C4101: fr: неиспользованная локальная переменная
+c:\projects\heightmap_cpp\heightmap\source.cpp(83): warning C4101: r: неиспользованная локальная переменная
   HeightMap.vcxproj -> C:\Projects\HeightMap_Cpp\Debug\HeightMap.exe
-  HeightMap.vcxproj -> C:\Projects\HeightMap_Cpp\Debug\HeightMap.pdb (Partial PDB)
