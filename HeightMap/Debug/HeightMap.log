@@ -1,5 +1,4 @@
 ﻿  Generator.cpp
 c:\projects\heightmap_cpp\heightmap\generator.cpp(79): warning C4244: =: преобразование "double" в "int", возможна потеря данных
 c:\projects\heightmap_cpp\heightmap\generator.cpp(106): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-  HeightMap.vcxproj -> C:\Projects\HeightMap_Cpp\Debug\HeightMap.exe
-  HeightMap.vcxproj -> C:\Projects\HeightMap_Cpp\Debug\HeightMap.pdb (Partial PDB)
+  HeightMap.vcxproj -> C:\Projects\HeightMap_Cpp\HeightMap\Debug\HeightMap.exe

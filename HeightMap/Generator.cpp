@@ -121,26 +121,28 @@ void Generator::River_generation(int base_x,int base_y,int x, int y) {
 }
 
 void Generator::line(int x0,int y0,int x1,int y1) {
-  //Ёто вариант дл€ ситуаций, из нижнего левого угла в верхний правый. deltay <= deltax;
+  //–исует на карте пр€мую линию, соедин€ющую точки (x0,y0) и (x1,y1). √раничные точки €вл€ютс€ частью пр€мой.
   int deltax = abs(x1-x0), deltay = abs(y1-y0);
-  double error = 0, deltaerr = (double)deltay/deltax;
-  int y = y0,x;
-  int diry = y1-y0;
-  if (diry > 0)
-      diry=1;
-  else
-      diry = -1;
-  if (deltay <= deltax)
-    for (x = x0; x < x1; x++) {
-      river[x][y] = 1.0;
-      error += deltaerr;
-      if (error > 0.5){
-          y=y+diry;
-          error -= 1.0;
+  double error = 0;
+  if (deltay <= deltax){
+    double deltaerr = (double)deltay/deltax;
+    int y = y0,x=x0;
+    int diry = y1-y0;
+    if (diry > 0)
+        diry=1;
+    else
+        diry = -1;
+  if (x1-x > 0)
+      for (x = x0; x < x1; x++) {
+        river[x][y] = 1.0;
+        error += deltaerr;
+        if (error > 0.5){
+            y=y+diry;
+            error -= 1.0;
+        }
       }
-    }
   else
-    for (x = x1-1; x >= x0; x--) {
+    for (x = x0; x >= x1; x--) {
       river[x][y] = 1.0;
       error += deltaerr;
       if (error > 0.5) {
@@ -148,6 +150,34 @@ void Generator::line(int x0,int y0,int x1,int y1) {
         error -= 1.0;
       }
     }
+  }
+  else {
+    double deltaerr = (double)deltax / deltay;
+    int y = y0, x = x0;
+    int dirx = x1 - x0;
+    if (dirx > 0)
+      dirx = 1;
+    else
+      dirx = -1;
+    if (y0 < y1)
+      for (y = y0; y < y1; y++) {
+        river[x][y] = 1.0;
+        error += deltaerr;
+        if (error > 0.5) {
+          x = x + dirx;
+          error -= 1.0;
+        }
+      }
+   else
+     for (y = y0; y >= y1; y--) {
+       river[x][y] = 1.0;
+       error += deltaerr;
+       if (error > 0.5) {
+         x = x + dirx;
+         error -= 1.0;
+       }
+     }
+  }
 }
 
 Generator::~Generator()

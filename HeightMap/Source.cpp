@@ -119,11 +119,17 @@ int main() {
 //  fclose(f);
   //gen.River_generation(200,0,0,700);
   //gen.line(0,0,200,100);
-  gen.line(0, 0, 200, 300);
-  gen.line(0, 0, 200, 700);
+  gen.line(100, 350, 199, 400);//1
+  gen.line(100, 350, 199, 699);//2
+  gen.line(100,350, 0, 699);//3
+  gen.line(100, 350, 0, 400);//4
+  gen.line(100, 350, 0, 300);//5
+  gen.line(100, 350, 0, 0);//6
+  gen.line(100, 350, 199, 0);//7
+  gen.line(100, 350, 199, 300);//8
   std::cout << "time consumed for generation: " << (double)(clock() - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
   start = clock();
-  CreateBmp24("C:\\Output\\bit.bmp",gen.river,0.0);
+  CreateBmp24("C:\\Output\\bit.bmp",gen.river,1.1);
   end = clock();
  // double time_cons = (end - start) / ((w*h)*CLOCKS_PER_SEC);
 //  std::cout<<"time consumed for drawing bitmap: "<<(double)(end-start)/CLOCKS_PER_SEC<<" seconds"<<std::endl<<w*h<<" points calculated"<<std::endl<<time_cons<<" time per point"<<std::endl;
