@@ -1,5 +1,6 @@
 #pragma once
 #include "HeightMap.h"
+#include <assert.h>
 #include <iostream>
 #include <random>
 class Generator
@@ -10,8 +11,10 @@ public:
   HeightMap hmap;
   HeightMap river;
   ~Generator();
-  void River_generation(int base_x, int base_y,int x,int y);
+  void River_generation(int base_x, int base_y,int x,int y,int iteration,double roughness);
   void line(int x0, int y0, int x1, int y1);
+  void curve(int x0,int y0,int xm,int ym,int x1,int y1);
+  void curveSeg(int x0, int y0, int xm, int ym, int x1, int y1);
 private:
  double roughness_;
  int step_size;

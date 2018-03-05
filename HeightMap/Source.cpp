@@ -54,13 +54,16 @@ void CreateBmp24(char *fname, HeightMap& hmap,double sea_level)
     for (j = 0; j < hmap.y_size(); j++){
       if (hmap[i][j] > sea_level){
         color.rgbtGreen = 255 - (int)(hmap[i][j] * 255);
-        color.rgbtBlue = 0;
-        color.rgbtRed = 0;
+        color.rgbtBlue = 255 - (int)(hmap[i][j] * 255);
+        color.rgbtRed = 255 - (int)(hmap[i][j] * 255);
       }
       else {
-        color.rgbtGreen = 0;
-        color.rgbtBlue = 255- (int)(hmap[i][j] * 255);;
-        color.rgbtRed = 0;
+        //color.rgbtGreen = 0;
+        //color.rgbtBlue = 255- (int)(hmap[i][j] * 255);;
+        //color.rgbtRed = 0;
+        color.rgbtGreen = 255;
+        color.rgbtBlue = 255;
+        color.rgbtRed = 255;
       }
       WriteFile(hFile, &color, sizeof(color), &RW, NULL);
     }
@@ -79,7 +82,8 @@ int main() {
   int h,w;
   std::cout.precision(5);
   clock_t start,end;
-  gen.river = HeightMap(200,700);
+  gen.river = HeightMap(800,1600);
+  gen.river.zeros();
   double r,avg=0.0;
  /* std::cout<<"Input height: ";
   std::cin>>h;
@@ -117,19 +121,12 @@ int main() {
 //}
  // system("pause");
 //  fclose(f);
-  //gen.River_generation(200,0,0,700);
-  //gen.line(0,0,200,100);
-  gen.line(100, 350, 199, 400);//1
-  gen.line(100, 350, 199, 699);//2
-  gen.line(100,350, 0, 699);//3
-  gen.line(100, 350, 0, 400);//4
-  gen.line(100, 350, 0, 300);//5
-  gen.line(100, 350, 0, 0);//6
-  gen.line(100, 350, 199, 0);//7
-  gen.line(100, 350, 199, 300);//8
+  gen.River_generation(400,0,599,1599,0,0.4);
+  //gen.curve(1,1,200,200,150,600);
+
   std::cout << "time consumed for generation: " << (double)(clock() - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
   start = clock();
-  CreateBmp24("C:\\Output\\bit.bmp",gen.river,1.1);
+  CreateBmp24("C:\\Output\\bit.png",gen.river,0);
   end = clock();
  // double time_cons = (end - start) / ((w*h)*CLOCKS_PER_SEC);
 //  std::cout<<"time consumed for drawing bitmap: "<<(double)(end-start)/CLOCKS_PER_SEC<<" seconds"<<std::endl<<w*h<<" points calculated"<<std::endl<<time_cons<<" time per point"<<std::endl;
