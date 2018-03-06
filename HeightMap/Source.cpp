@@ -121,7 +121,8 @@ int main() {
 //}
  // system("pause");
 //  fclose(f);
-  gen.River_generation(400,0,599,1599,0,0.4);
+  int sign = 1;
+  gen.River_generation(400,0,599,1599,sign);
   //gen.curve(1,1,200,200,150,600);
 
   std::cout << "time consumed for generation: " << (double)(clock() - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
