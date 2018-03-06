@@ -54,13 +54,16 @@ void CreateBmp24(char *fname, HeightMap& hmap,double sea_level)
     for (j = 0; j < hmap.y_size(); j++){
       if (hmap[i][j] > sea_level){
         color.rgbtGreen = 255 - (int)(hmap[i][j] * 255);
-        color.rgbtBlue = 0;
-        color.rgbtRed = 0;
+        color.rgbtBlue = 255 - (int)(hmap[i][j] * 255);
+        color.rgbtRed = 255 - (int)(hmap[i][j] * 255);
       }
       else {
-        color.rgbtGreen = 0;
-        color.rgbtBlue = 255- (int)(hmap[i][j] * 255);;
-        color.rgbtRed = 0;
+        //color.rgbtGreen = 0;
+        //color.rgbtBlue = 255- (int)(hmap[i][j] * 255);;
+        //color.rgbtRed = 0;
+        color.rgbtGreen = 255;
+        color.rgbtBlue = 255;
+        color.rgbtRed = 255;
       }
       WriteFile(hFile, &color, sizeof(color), &RW, NULL);
     }
@@ -79,49 +82,53 @@ int main() {
   int h,w;
   std::cout.precision(5);
   clock_t start,end;
+  gen.river = HeightMap(800,1600);
+  gen.river.zeros();
   double r,avg=0.0;
-  std::cout<<"Input height: ";
+ /* std::cout<<"Input height: ";
   std::cin>>h;
   std::cout << "Input width: ";
   std::cin >> w;
   std::cout << "Input roughness: ";
-  std::cin >> r;
+  std::cin >> r;*/
   start =clock();
   double newavg,summ,curr;
-  FILE *f;
-  errno_t err;
-  err = fopen_s(&f, "C:\\Output\\x.mat", "w");
-  for (int u = 0;u<101;u++){
-  curr = (double)u/100;
-  summ = 0.0;
-    for (int k=0; k<25;k++){
-    gen.Generate(h,w,curr);
-    avg = gen.hmap.average();
-    for (int i=0;i<gen.hmap.x_size();i++)
-      for (int j=0;j<gen.hmap.y_size();j++)
-        gen.hmap[i][j]= pow(gen.hmap[i][j],2);
-    std::vector<double> vect(w*h);
-    int counter = 0;
-    for (int i = 0; i<gen.hmap.x_size(); i++)
-      for (int j = 0; j<gen.hmap.y_size(); j++)
-        vect[counter++] = gen.hmap[i][j];
-    std::sort(vect.begin(),vect.end());
-    avg = vect[(int)((w*h*3)/4)]; 
-    double a = gen.hmap.average();
-    summ+= avg/a;
-  }
-  fprintf(f,"%f",summ/25);
-  fputs(" ",f);
-  std::cout<<"Average ratio for "<<std::fixed<<curr<<" is "<<summ/25<<std::endl;
-}
-  system("pause");
-  fclose(f);
-  return 0;
+  //FILE *f;
+  //errno_t err;
+  //err = fopen_s(&f, "C:\\Output\\x.mat", "w");
+//  for (int u = 0;u<101;u++){
+//  curr = (double)u/100;
+//  summ = 0.0;
+//    for (int k=0; k<25;k++){
+//    gen.Generate(h,w,curr);
+//    avg = gen.hmap.average();
+//    for (int i=0;i<gen.hmap.x_size();i++)
+//      for (int j=0;j<gen.hmap.y_size();j++)
+//        gen.hmap[i][j]= pow(gen.hmap[i][j],2);
+//    std::vector<double> vect(w*h);
+//    int counter = 0;
+//    for (int i = 0; i<gen.hmap.x_size(); i++)
+//      for (int j = 0; j<gen.hmap.y_size(); j++)
+//        vect[counter++] = gen.hmap[i][j];
+//    std::sort(vect.begin(),vect.end());
+//    avg = vect[(int)((w*h)/2)]; 
+//    double a = gen.hmap.average();
+//    summ+= avg/a;
+//  }
+//  fprintf(f,"%f",summ/25);
+//  fputs(" ",f);
+//  std::cout<<"Average ratio for "<<std::fixed<<curr<<" is "<<summ/25<<std::endl;
+//}
+ // system("pause");
+//  fclose(f);
+  gen.River_generation(400,0,599,1599,0,0.4);
+  //gen.curve(1,1,200,200,150,600);
+
   std::cout << "time consumed for generation: " << (double)(clock() - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
   start = clock();
-  CreateBmp24("C:\\Output\\bit.bmp",gen.hmap,avg);
+  CreateBmp24("C:\\Output\\bit.png",gen.river,0);
   end = clock();
-  double time_cons = (end - start) / ((w*h)*CLOCKS_PER_SEC);
-  std::cout<<"time consumed for drawing bitmap: "<<(double)(end-start)/CLOCKS_PER_SEC<<" seconds"<<std::endl<<w*h<<" points calculated"<<std::endl<<time_cons<<" time per point"<<std::endl;
+ // double time_cons = (end - start) / ((w*h)*CLOCKS_PER_SEC);
+//  std::cout<<"time consumed for drawing bitmap: "<<(double)(end-start)/CLOCKS_PER_SEC<<" seconds"<<std::endl<<w*h<<" points calculated"<<std::endl<<time_cons<<" time per point"<<std::endl;
   system("pause");
 }

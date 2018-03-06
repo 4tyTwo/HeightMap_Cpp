@@ -15,4 +15,3 @@ private:
   double** data;
   int x_size_,y_size_;
 };
-

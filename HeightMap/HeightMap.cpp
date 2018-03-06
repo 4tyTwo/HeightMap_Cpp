@@ -17,6 +17,7 @@ void HeightMap::zeros() {
       data[i][j]=0.0;
 }
 
+
 double* HeightMap::operator[](int x) {
   return data[x];
 }
