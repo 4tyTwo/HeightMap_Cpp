@@ -11,7 +11,7 @@ public:
   HeightMap hmap;
   HeightMap river;
   ~Generator();
-  void River_generation(int base_x, int base_y,int x,int y,int iteration,double roughness);
+  void River_generation(int base_x, int base_y,int x,int y,int& sign);
   void line(int x0, int y0, int x1, int y1);
   void curve(int x0,int y0,int xm,int ym,int x1,int y1);
   void curveSeg(int x0, int y0, int xm, int ym, int x1, int y1);

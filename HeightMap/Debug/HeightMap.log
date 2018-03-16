@@ -1,10 +1,10 @@
 ﻿  Generator.cpp
 c:\projects\heightmap_cpp\heightmap\generator.cpp(79): warning C4244: =: преобразование "double" в "int", возможна потеря данных
-c:\projects\heightmap_cpp\heightmap\generator.cpp(119): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-c:\projects\heightmap_cpp\heightmap\generator.cpp(203): warning C4244: =: преобразование "double" в "int", возможна потеря данных
-c:\projects\heightmap_cpp\heightmap\generator.cpp(205): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
-c:\projects\heightmap_cpp\heightmap\generator.cpp(207): warning C4244: =: преобразование "double" в "int", возможна потеря данных
-c:\projects\heightmap_cpp\heightmap\generator.cpp(213): warning C4244: =: преобразование "double" в "int", возможна потеря данных
-c:\projects\heightmap_cpp\heightmap\generator.cpp(215): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
-c:\projects\heightmap_cpp\heightmap\generator.cpp(217): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+c:\projects\heightmap_cpp\heightmap\generator.cpp(104): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\projects\heightmap_cpp\heightmap\generator.cpp(229): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+c:\projects\heightmap_cpp\heightmap\generator.cpp(231): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+c:\projects\heightmap_cpp\heightmap\generator.cpp(233): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+c:\projects\heightmap_cpp\heightmap\generator.cpp(239): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+c:\projects\heightmap_cpp\heightmap\generator.cpp(241): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+c:\projects\heightmap_cpp\heightmap\generator.cpp(243): warning C4244: =: преобразование "double" в "int", возможна потеря данных
   HeightMap.vcxproj -> C:\Projects\HeightMap_Cpp\HeightMap\Debug\HeightMap.exe

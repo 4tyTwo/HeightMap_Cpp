@@ -90,43 +90,69 @@ void Generator::Generate(int x_size_, int y_size_, double roughness) {
   }
 }
 
-void Generator::River_generation(int base_x,int base_y,int x, int y,int iteration,double roughness) {
-  //int length = (abs(x - base_x)>=abs(y - base_y)) ? x-base_x:y-base_y;
+void Generator::River_generation(int base_x,int base_y,int x, int y,int& sign) {
   int length = y - base_y;
+  int mx = base_x + ((x - base_x) / 2), my = base_y + ((y - base_y) / 2);
+  int newy = my, newx = mx;
   if (length<=32){
     if (base_x == x){
       for(int i = base_y;i<y;i++)
         river[x][i]=1.0;
     }
     else{
-      int mx = base_x + ((x - base_x) / 2), my = base_y + ((y - base_y) / 2);
-      int coeff = length/2;
-      int newx = mx + rand()%coeff - coeff/2;
-      if (newx >= river.x_size())
-          newx = river.x_size() - newx % river.x_size() - 1;
-      if (newx < 0)
-         newx = abs(newx);
-      int newy = my;
-      curve(base_x, base_y, newx, my, x, y);
+      mx = base_x + ((x - base_x) / 2), my = base_y + ((y - base_y) / 2);
+      int coeff = length/2.4;
+      if (abs(x - base_x) > length) {
+        length = abs(x-base_x);
+        coeff = length / 5;
+        newy = my + sign*(rand() % coeff + length/12);
+        //sign*=-1;
+        if (newy >= river.y_size())
+          newy = river.y_size() - newx % river.y_size() - 1;
+        if (newy < 0)
+          newy = abs(newy);
+        int newx = mx;
+      }
+      else{
+        newx = mx + sign*(rand()%coeff +length/4);
+        sign *= -1;
+        if (newx >= river.x_size())
+            newx = river.x_size() - newx % river.x_size() - 1;
+        if (newx < 0)
+           newx = abs(newx);
+       newy = my; 
+      }
+      curve(base_x, base_y, newx, newy, x, y);
       return;
     }
 }
- // int coeff = length/6;
- // coeff = (coeff == 0) ? 1 : coeff;
- // double rnd = rand() % coeff, rnd2 = (rand() % coeff - coeff/2)/2;
-  //int mx = base_x + ((x-base_x)/2) + rnd - coeff/2, my = base_y + ((y-base_y)/2) + rnd2;
-  int mx = base_x + ((x - base_x) / 2), my = base_y + ((y - base_y) / 2);
-  int coeff = length / 2.5;
-  int newx = mx + rand() % coeff - coeff / 2;
-  if (newx < 0)
-    newx = abs(newx);
-  else
-    if (newx >= x)
-      newx = x-1;
-  if (newx < 0)
-    newx = abs(newx);
-  River_generation(newx,my,x,y,iteration+1,roughness);//верхне-правая половина
-  River_generation(base_x,base_y, newx, my, iteration + 1, roughness);
+  int coeff = length / 7;
+  if (abs(x - base_x > length)) {
+    length = abs(x - base_x);
+    coeff = length / 12;
+    newy = my + sign * (rand() % coeff + length / 35);
+    //sign *= -1;
+    if (newy < 0)
+      newy = abs(newy);
+    else
+      if (newy >= y)
+        newy = y - 1;
+    if (newy < 0)
+      newy = abs(newy);
+  }
+  else{
+    newx = mx + sign*(rand()%coeff + length/35);
+    sign*=-1;
+    if (newx < 0)
+      newx = abs(newx);
+    else
+      if (newx >= x)
+        newx = x-1;
+    if (newx < 0)
+      newx = abs(newx);
+  }
+  River_generation(newx,newy,x,y,sign);//верхне-правая половина
+  River_generation(base_x,base_y, newx, newy, sign);
 }
 
 void Generator::line(int x0,int y0,int x1,int y1) {
